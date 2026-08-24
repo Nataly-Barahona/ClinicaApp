@@ -10,12 +10,19 @@ public class Turno {
     private LocalDateTime fechaHora;
     private EstadoTurno estado;
 
-    public Turno(int id, Paciente paciente, Medico medico, LocalDateTime fechaHora) {
-        setId(id);
+    public Turno(int id, Paciente paciente, Medico medico, LocalDateTime fechaHora, EstadoTurno estado) {
+        this.id = id;
+        this.paciente = paciente;
+        this.medico = medico;
+        this.fechaHora = fechaHora;
+        this.estado = estado;
+    }
+
+    public Turno(Paciente paciente, Medico medico, LocalDateTime fechaHora) {
         setPaciente(paciente);
         setMedico(medico);
         setFechaHora(fechaHora);
-        this.estado = EstadoTurno.PENDIENTE; 
+        setEstado(EstadoTurno.PENDIENTE);
     }
 
     public int getId() {
@@ -70,6 +77,7 @@ public class Turno {
         this.estado = estado;
     }
 
+    // Control de conflictos de agenda: dos turnos son iguales si coinciden en médico y fechaHora
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -93,3 +101,4 @@ public class Turno {
                fechaHora;
     }
 }
+
