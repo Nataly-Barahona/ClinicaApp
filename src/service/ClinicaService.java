@@ -188,7 +188,7 @@ public class ClinicaService implements Consultable {
             throw new IllegalArgumentException("El paciente no esta registrado.");
         }
 
-        Medico medicoExistente = buscarMedicoInterno(turno.getMedico().getNombre(), turno.getMedico().getApellido());
+        Medico medicoExistente = buscarPorNombreApellido(turno.getMedico().getNombre(), turno.getMedico().getApellido());
         if (medicoExistente == null) {
             throw new IllegalArgumentException("El medico no esta registrado.");
         }
