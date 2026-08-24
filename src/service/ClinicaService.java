@@ -67,6 +67,52 @@ public class ClinicaService implements Consultable {
         System.out.println("No se encontro el medico con nombre : " + nombre + " y apellido " + apellido + " ❌");
         return null;
     }
+    // =======================================================
+    // MÉTODOS DE PACIENTE ===================================
+    // =======================================================
+
+    public void registrarPaciente(Paciente paciente) {
+        if (paciente == null || !paciente.esValido()) {
+            System.out.println("Error: Los datos del paciente no son válidos.");
+            return;
+        }
+        if (pacientes.contains(paciente)) {
+            System.out.println("Error: Ya existe un paciente registrado con la cédula " + paciente.getCedula());
+            return;
+        }
+
+        int maximo = 0;
+        for (Paciente p : pacientes) {
+            if (p.getId() > maximo) {
+                maximo = p.getId();
+            }
+        }
+        paciente.setId(maximo + 1);
+        pacientes.add(paciente);
+        System.out.println("Se registró el paciente");
+        System.out.println(paciente.getDatosRegistro());
+    }
+    public Paciente buscarPorCedula(String cedula) {
+        if (cedula == null) return null;
+        for (Paciente paciente : pacientes) {
+            if (paciente.getCedula().equals(cedula.trim())) {
+                return paciente;
+            }
+        }
+        return null;
+    }
+    public void listarPacientes() {
+        if (pacientes.isEmpty()) {
+            System.out.println("No hay pacientes registrados.");
+            return;
+        }
+        List<Paciente> copia = new ArrayList<>(pacientes);
+        copia.sort(java.util.Comparator.comparing(Paciente::getApellido)
+                .thenComparing(Paciente::getNombre));
+        for (Paciente p : copia) {
+            System.out.println(p.toString());
+        }
+    }
 
     public void listarMedicos() {
         if (medicos.isEmpty()) {
