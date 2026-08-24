@@ -53,7 +53,7 @@ public class ClinicaService implements Consultable {
 
         Medico nuevoMedico = new Medico(nombre, apellido, especialidad);
 
-        if ( !nuevoMedico.esValido()) {
+        if (!nuevoMedico.esValido()) {
             System.out.println("Error: Los datos del médico no son válidos. ❌");
             return;
         }
