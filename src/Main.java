@@ -1,11 +1,27 @@
+<<<<<<< HEAD
+import model.Especialidad;
+import model.Medico;
+
+//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
+// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
+=======
 
 import service.ClinicaService;
 
 import java.util.Scanner;
 
+>>>>>>> origin/main
 public class Main {
     public static void main(String[] args) {
 
+<<<<<<< HEAD
+        for (int i = 1; i <= 5; i++) {
+            //TIP Press <shortcut actionId="Debug"/> to start debugging your code. We have set one <icon src="AllIcons.Debugger.Db_set_breakpoint"/> breakpoint
+            // for you, but you can always add more by pressing <shortcut actionId="ToggleLineBreakpoint"/>.
+            System.out.println("i = " + i);
+        }
+
+=======
         // 1.INSTANCIA CLINICA
        ClinicaService servicio = new ClinicaService();
 
@@ -101,6 +117,7 @@ public class Main {
         } while (opcion != 0);
 
         scanner.close();
+>>>>>>> origin/main
     }
 
     public static void mostrarMenu() {
