@@ -2,6 +2,8 @@ package model;
 
 import interfaces.Registrable;
 
+import java.util.Objects;
+
 public class Medico implements Registrable {
     private int id;
     private String nombre;
@@ -67,7 +69,7 @@ public class Medico implements Registrable {
 
 
         }
-        String apellidoLimpio = nombre.trim();
+        String apellidoLimpio = apellido.trim();
 
         String SOLO_LETRAS_EXPRESION_REGULAR = "^[a-zA-ZáéíóúÁÉÍÓÚñÑ\\s]+$";
 
@@ -88,7 +90,7 @@ public class Medico implements Registrable {
         }
         this.especialidad = especialidad;
     }
-
+    
 
     @Override
     public String toString() {
