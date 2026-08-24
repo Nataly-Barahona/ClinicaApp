@@ -108,4 +108,13 @@ public class Medico implements Registrable {
     }
 
 
+    @Override
+    public String getDatosRegistro() {
+        return "";
+    }
+
+    @Override
+    public boolean esValido() {
+        return false;
+    }
 }
