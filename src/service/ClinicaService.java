@@ -8,6 +8,7 @@ import model.Turno;
 import java.awt.image.AreaAveragingScaleFilter;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 public class ClinicaService implements Consultable {
@@ -67,22 +68,60 @@ public class ClinicaService implements Consultable {
         return null;
     }
 
+
+
+
+
+
+
+
+
+
     @Override
-    public List<Turno> buscarPorMedico(Medico medico) {
-        return List.of();
+    public List<Turno> buscarPorMedico( Medico medico) {
+        List<Turno> resultado =  new ArrayList<>();
+        for (Turno turno : turnos) {
+            if (turno.getMedico().equals(medico)) {
+                resultado.add(turno);
+            }
+        }
+        return resultado;
     }
 
 
     @Override
-    public List<Turno> listarTurnosDelDia(LocalDate fecha) {
-        return List.of();
+    public List<Turno> listarTurnosDelDia(
+            LocalDate fecha) {
+
+        List<Turno> resultado =
+                new ArrayList<>();
+
+        for (Turno turno : turnos) {
+            if (turno.getFechaHora()
+                    .toLocalDate()
+                    .equals(fecha)) {
+                resultado.add(turno);
+            }
+        }
+        resultado.sort(Comparator.comparing(Turno::getFechaHora) );
+        return resultado;
     }
+
 
 
     //Paciente
 
     @Override
-    public List<Turno> buscarPorPaciente(Paciente paciente) {
-        return List.of();
+    public List<Turno> buscarPorPaciente(
+            Paciente paciente) {
+
+        List<Turno> resultado =
+                new ArrayList<>();
+        for (Turno turno : turnos) {
+            if (turno.getPaciente().equals(paciente)) {
+                resultado.add(turno);
+            }
+        }
+        return resultado;
     }
 }
