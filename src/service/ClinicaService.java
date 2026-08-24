@@ -30,7 +30,10 @@ public class ClinicaService implements Consultable {
         return turnos;
     }
 
-    //Medico
+    // =======================================================
+    // METODOS DE MEDICOS  ===================================
+    // =======================================================
+
     public void registrarMedico(Medico medico) {
 
         if (!medico.esValido()) {
@@ -67,6 +70,19 @@ public class ClinicaService implements Consultable {
         System.out.println("No se encontro el medico con nombre : " + nombre + " y apellido " + apellido + " ❌");
         return null;
     }
+
+    public void listarMedicos() {
+        if (medicos.isEmpty()) {
+            System.out.println("No hay médicos registrados ❌");
+            return;
+        }
+        List<Medico> copiaMedicos = new ArrayList<>(medicos);
+        copiaMedicos.sort(Comparator.comparing(Medico::getEspecialidad).thenComparing(Medico::getApellido));
+        for (Medico medico : copiaMedicos) {
+            System.out.println(medico.toString());
+        }
+
+    }
     // =======================================================
     // MÉTODOS DE PACIENTE ===================================
     // =======================================================
@@ -92,6 +108,7 @@ public class ClinicaService implements Consultable {
         System.out.println("Se registró el paciente");
         System.out.println(paciente.getDatosRegistro());
     }
+
     public Paciente buscarPorCedula(String cedula) {
         if (cedula == null) return null;
         for (Paciente paciente : pacientes) {
@@ -101,6 +118,7 @@ public class ClinicaService implements Consultable {
         }
         return null;
     }
+
     public void listarPacientes() {
         if (pacientes.isEmpty()) {
             System.out.println("No hay pacientes registrados.");
@@ -112,19 +130,6 @@ public class ClinicaService implements Consultable {
         for (Paciente p : copia) {
             System.out.println(p.toString());
         }
-    }
-
-    public void listarMedicos() {
-        if (medicos.isEmpty()) {
-            System.out.println("No hay médicos registrados ❌");
-            return;
-        }
-        List<Medico> copiaMedicos = new ArrayList<>(medicos);
-        copiaMedicos.sort(Comparator.comparing(Medico::getEspecialidad).thenComparing(Medico::getApellido));
-        for (Medico medico : copiaMedicos) {
-            System.out.println(medico.toString());
-        }
-
     }
 
 
@@ -139,8 +144,6 @@ public class ClinicaService implements Consultable {
         return List.of();
     }
 
-
-    //Paciente
 
     @Override
     public List<Turno> buscarPorPaciente(Paciente paciente) {
