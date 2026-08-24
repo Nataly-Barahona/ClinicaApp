@@ -8,6 +8,7 @@ import model.Turno;
 import java.awt.image.AreaAveragingScaleFilter;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 public class ClinicaService implements Consultable {
@@ -66,6 +67,20 @@ public class ClinicaService implements Consultable {
         System.out.println("No se encontro el medico con nombre : " + nombre + " y apellido " + apellido + " ❌");
         return null;
     }
+
+    public void listarMedicos() {
+        if (medicos.isEmpty()) {
+            System.out.println("No hay médicos registrados ❌");
+            return;
+        }
+        List<Medico> copiaMedicos = new ArrayList<>(medicos);
+        copiaMedicos.sort(Comparator.comparing(Medico::getEspecialidad).thenComparing(Medico::getApellido));
+        for (Medico medico : copiaMedicos) {
+            System.out.println(medico.toString());
+        }
+
+    }
+
 
     @Override
     public List<Turno> buscarPorMedico(Medico medico) {
