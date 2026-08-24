@@ -31,7 +31,10 @@ public class ClinicaService implements Consultable {
         return turnos;
     }
 
-    //Medico
+    // =======================================================
+    // METODOS DE MEDICOS  ===================================
+    // =======================================================
+
     public void registrarMedico(Medico medico) {
 
         if (!medico.esValido()) {
@@ -69,23 +72,111 @@ public class ClinicaService implements Consultable {
         return null;
     }
 
-    @Override
-    public List<Turno> buscarPorMedico(Medico medico) {
-        return List.of();
+    public void listarMedicos() {
+        if (medicos.isEmpty()) {
+            System.out.println("No hay médicos registrados ❌");
+            return;
+        }
+        List<Medico> copiaMedicos = new ArrayList<>(medicos);
+        copiaMedicos.sort(Comparator.comparing(Medico::getEspecialidad).thenComparing(Medico::getApellido));
+        for (Medico medico : copiaMedicos) {
+            System.out.println(medico.toString());
+        }
+
+    }
+    // =======================================================
+    // MÉTODOS DE PACIENTE ===================================
+    // =======================================================
+
+    public void registrarPaciente(Paciente paciente) {
+        if (paciente == null || !paciente.esValido()) {
+            System.out.println("Error: Los datos del paciente no son válidos.");
+            return;
+        }
+        if (pacientes.contains(paciente)) {
+            System.out.println("Error: Ya existe un paciente registrado con la cédula " + paciente.getCedula());
+            return;
+        }
+
+        int maximo = 0;
+        for (Paciente p : pacientes) {
+            if (p.getId() > maximo) {
+                maximo = p.getId();
+            }
+        }
+        paciente.setId(maximo + 1);
+        pacientes.add(paciente);
+        System.out.println("Se registró el paciente");
+        System.out.println(paciente.getDatosRegistro());
+    }
+
+    public Paciente buscarPorCedula(String cedula) {
+        if (cedula == null) return null;
+        for (Paciente paciente : pacientes) {
+            if (paciente.getCedula().equals(cedula.trim())) {
+                return paciente;
+            }
+        }
+        return null;
+    }
+
+    public void listarPacientes() {
+        if (pacientes.isEmpty()) {
+            System.out.println("No hay pacientes registrados.");
+            return;
+        }
+        List<Paciente> copia = new ArrayList<>(pacientes);
+        copia.sort(java.util.Comparator.comparing(Paciente::getApellido)
+                .thenComparing(Paciente::getNombre));
+        for (Paciente p : copia) {
+            System.out.println(p.toString());
+        }
     }
 
 
     @Override
-    public List<Turno> listarTurnosDelDia(LocalDate fecha) {
-        return List.of();
+    public List<Turno> buscarPorMedico( Medico medico) {
+        List<Turno> resultado =  new ArrayList<>();
+        for (Turno turno : turnos) {
+            if (turno.getMedico().equals(medico)) {
+                resultado.add(turno);
+            }
+        }
+        return resultado;
     }
 
 
-    //Paciente
+    @Override
+    public List<Turno> listarTurnosDelDia(
+            LocalDate fecha) {
+
+        List<Turno> resultado =
+                new ArrayList<>();
+
+        for (Turno turno : turnos) {
+            if (turno.getFechaHora()
+                    .toLocalDate()
+                    .equals(fecha)) {
+                resultado.add(turno);
+            }
+        }
+        resultado.sort(Comparator.comparing(Turno::getFechaHora) );
+        return resultado;
+    }
+
 
     @Override
-    public List<Turno> buscarPorPaciente(Paciente paciente) {
-        return List.of();
+    public List<Turno> buscarPorPaciente(
+            Paciente paciente) {
+
+        List<Turno> resultado =
+                new ArrayList<>();
+        for (Turno turno : turnos) {
+            if (turno.getPaciente().equals(paciente)) {
+                resultado.add(turno);
+            }
+        }
+        return resultado;
     }
 
 //Turno
