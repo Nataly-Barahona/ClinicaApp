@@ -26,58 +26,58 @@ public class Main {
                 switch (opcion) {
                     case 1:
                         System.out.println("REGISTRAR PACIENTE");
-                        registrarPaciente(scanner, servicio);
+                        servicio.registrarPaciente(scanner);
                         break;
 
                     case 2:
                         System.out.println("REGISTRAR MEDICO");
-                        registrarPaciente(scanner, servicio);
+                        servicio.registrarMedico(scanner);
                         break;
 
                     case 3:
                         System.out.println("ASIGNAR TURNO");
-                        asignarTurno(scanner, servicio);
+                        servicio.asignarTurno(scanner);
                         break;
 
                     case 4:
                         System.out.println("LISTAR TURNOS DEL DÍA");
-                        listarTurnosDelDia(scanner, servicio);
+                        servicio.listarTurnosDelDia(scanner);
                         break;
 
                     case 5:
                         System.out.println("CANCELAR TURNO");
-                        cancelarTurno(scanner, servicio);
+                        servicio.cancelarTurno(scanner);
                         break;
 
                     case 6:
                         System.out.println("VER TURNOS POR MÉDICO");
-                        verTurnosPorMedico(scanner, servicio);
+                        servicio.verTurnosPorMedico(scanner);
                         break;
 
                     case 7:
                         System.out.println("VER TURNOS POR PACIENTE");
-                        verTurnosPorPaciente(scanner, servicio);
+                        servicio.verTurnosPorPaciente(scanner);
                         break;
 
                     case 8:
                         System.out.println("CAMBIAR ESTADO DE TURNO");
-                        cambiarEstadoTurno(scanner, servicio);
+                        servicio.cambiarEstadoTurno(scanner);
                         break;
 
                     case 9:
                         System.out.println("LISTAR PACIENTES");
-                        listarPacientes(servicio);
+                        servicio.mostrarPacientes();
                         break;
 
                     case 10:
                         System.out.println("FUNCION LISTAR MEDICOS");
-                        listarMedicos(servicio);
+                        servicio.mostrarMedicos();
                         break;
 
                     case 0:
                         System.out.println("ELECCIÓN SALIR...");
                         DatosCSV.guardar(servicio);
-                        System.out.println("\n Hasta pronto. Datos guardados.");
+                        System.out.println("\n Proceso finalizado. Datos guardados.");
                         break;
                 }
             } catch (NumberFormatException e) {
@@ -85,6 +85,7 @@ public class Main {
             }
 
         } while (opcion != 0);
+        scanner.close();
     }
 
     public static void mostrarMenu() {

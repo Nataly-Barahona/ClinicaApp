@@ -1,6 +1,7 @@
 package model;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
 public class Turno {
@@ -95,10 +96,24 @@ public class Turno {
     // Formato: "[PENDIENTE] María García — Dr. Carlos Pérez (CARDIOLOGIA) — 2026-06-10T09:30"
     @Override
     public String toString() {
-        return "[" + estado + "] " + 
-               (paciente != null ? paciente.getNombre() : "") + " — " + 
-               (medico != null ? medico.getNombre() + " (" + medico.getEspecialidad() + ")" : "") + " — " + 
-               fechaHora;
+
+        DateTimeFormatter formato =
+                DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+
+        return "[ID: " + id + "] "
+                + "[" + estado + "] "
+                + paciente.getNombre() + " "
+                + paciente.getApellido()
+                + " — "
+                + medico.getNombre() + " "
+                + medico.getApellido()
+                + " (" + medico.getEspecialidad() + ")"
+                + " — "
+                + fechaHora.format(formato);
     }
+
+
+
+
 }
 
