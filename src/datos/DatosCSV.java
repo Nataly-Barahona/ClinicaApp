@@ -1,6 +1,6 @@
-package co.generation.clinica.datos;
-import co.generation.clinica.model.*;
-import co.generation.clinica.service.ClinicaService;
+package datos;
+import model.*;
+import service.ClinicaService;
 import java.io.*; import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter; import java.util.List;
 public class DatosCSV {
