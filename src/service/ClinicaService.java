@@ -1,6 +1,7 @@
 package service;
 
 import interfaces.Consultable;
+import model.Especialidad;
 import model.Medico;
 import model.Paciente;
 import model.Turno;
@@ -10,6 +11,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Scanner;
 
 public class ClinicaService implements Consultable {
 
@@ -34,27 +36,47 @@ public class ClinicaService implements Consultable {
     // METODOS DE MEDICOS  ===================================
     // =======================================================
 
-    public void registrarMedico(Medico medico) {
+    public  void registrarMedico(Scanner scanner) {
+        System.out.println("\n--- REGISTRAR MÉDICO ---");
 
-        if (!medico.esValido()) {
-            throw new IllegalArgumentException("Los datos del medico no son validos.");
+        System.out.print("Ingrese el nombre: ");
+        String nombre = scanner.nextLine();
 
+        System.out.print("Ingrese el apellido: ");
+        String apellido = scanner.nextLine();
+
+        System.out.println("Especialidades: GENERAL, PEDIATRIA, CARDIOLOGIA, URGENCIAS");
+        System.out.print("Ingrese la especialidad: ");
+        String especialidadTexto = scanner.nextLine().trim().toUpperCase();
+
+        Especialidad especialidad = Especialidad.valueOf(especialidadTexto);
+
+        Medico nuevoMedico = new Medico(nombre, apellido, especialidad);
+
+        if ( !nuevoMedico.esValido()) {
+            System.out.println("Error: Los datos del médico no son válidos. ❌");
+            return;
         }
-        if (medicos.contains(medico)) {
-            throw new IllegalArgumentException("Ya existe el medico con ese nombre y apellido.");
+
+        if (medicos.contains(nuevoMedico)) {
+            System.out.println("Error: Ya existe un médico registrado con ese nombre y apellido. ❌");
+            return;
         }
 
         int maximo = 0;
-        for (Medico medico1 : medicos) {
-            if (medico1.getId() > maximo) {
-                maximo = medico1.getId();
+        for (Medico m : medicos) {
+            if (m.getId() > maximo) {
+                maximo = m.getId();
             }
         }
-        int nuevoId = maximo + 1;
-        medico.setId(maximo);
-        medicos.add(medico);
-        System.out.println("Se registro el medico ✅ ");
-        System.out.println(medico.getDatosRegistro());
+
+        nuevoMedico.setId(maximo + 1);
+        medicos.add(nuevoMedico);
+        System.out.println("Se registró el médico ✅");
+        System.out.println(nuevoMedico.getDatosRegistro());
+
+
+
     }
 
     public Medico buscarPorNombreApellido(String nombre, String apellido) {
