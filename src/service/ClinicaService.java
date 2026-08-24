@@ -1,5 +1,5 @@
 package service;
-
+import java.util.Scanner;
 import interfaces.Consultable;
 import model.Medico;
 import model.Paciente;
@@ -70,13 +70,30 @@ public class ClinicaService implements Consultable {
     // MÉTODOS DE PACIENTE ===================================
     // =======================================================
 
-    public void registrarPaciente(Paciente paciente) {
-        if (paciente == null || !paciente.esValido()) {
-            System.out.println("Error: Los datos del paciente no son válidos.");
+    public void registrarPaciente(Scanner scanner) {
+        System.out.println("\n--- REGISTRAR PACIENTE ---");
+
+        System.out.print("Ingrese la cédula: ");
+        String cedula = scanner.nextLine().trim();
+
+        System.out.print("Ingrese el nombre: ");
+        String nombre = scanner.nextLine().trim();
+
+        System.out.print("Ingrese el apellido: ");
+        String apellido = scanner.nextLine().trim();
+
+        System.out.print("Ingrese el teléfono: ");
+        String telefono = scanner.nextLine().trim();
+
+        Paciente nuevoPaciente = new Paciente(cedula, nombre, apellido, telefono);
+
+        if (!nuevoPaciente.esValido()) {
+            System.out.println("Error: Los datos del paciente no son válidos");
             return;
         }
-        if (pacientes.contains(paciente)) {
-            System.out.println("Error: Ya existe un paciente registrado con la cédula " + paciente.getCedula());
+
+        if (pacientes.contains(nuevoPaciente)) {
+            System.out.println("Error: Ya existe un paciente registrado con esa cédula");
             return;
         }
 
@@ -86,10 +103,12 @@ public class ClinicaService implements Consultable {
                 maximo = p.getId();
             }
         }
-        paciente.setId(maximo + 1);
-        pacientes.add(paciente);
-        System.out.println("Se registró el paciente");
-        System.out.println(paciente.getDatosRegistro());
+
+        nuevoPaciente.setId(maximo + 1);
+        pacientes.add(nuevoPaciente);
+
+        System.out.println("Se registró el paciente con éxito");
+        System.out.println(nuevoPaciente.getDatosRegistro());
     }
     public Paciente buscarPorCedula(String cedula) {
         if (cedula == null) return null;

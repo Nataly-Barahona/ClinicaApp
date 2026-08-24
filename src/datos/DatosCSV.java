@@ -20,8 +20,7 @@ public class DatosCSV {
             String linea;
             while ((linea = br.readLine()) != null) {
                 if (linea.isBlank()) continue;
-                String[] p = linea.split(",", -1); // id,cedula,nombre,apellido,telefon
-                o
+                String[] p = linea.split(",", -1); // id,cedula,nombre,apellido,telefono
                 servicio.getPacientes().add(new Paciente(
                         Integer.parseInt(p[0].trim()),
                         p[1].trim(), p[2].trim(), p[3].trim(), p[4].trim()));
@@ -47,8 +46,7 @@ public class DatosCSV {
             String linea;
             while ((linea = br.readLine()) != null) {
                 if (linea.isBlank()) continue;
-                // formato: id,cedulaPaciente,nombreMedico,apellidoMedico,fechaHora,est
-                ado
+                // formato: id,cedulaPaciente,nombreMedico,apellidoMedico,fechaHora,estado
                 String[] p = linea.split(",", -1);
                 Paciente pac = servicio.buscarPorCedula(p[1].trim());
                 Medico   med = servicio.buscarPorNombreApellido(
