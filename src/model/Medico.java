@@ -9,7 +9,7 @@ public class Medico implements Registrable {
     private String nombre;
     private String apellido;
     private Especialidad especialidad;
-
+    private String SOLO_LETRAS_EXPRESION_REGULAR = "^[a-zA-ZáéíóúÁÉÍÓÚñÑ\\s]+$";
 
     public Medico(int id, String nombre, String apellido, Especialidad especialidad) {
         this.id = id;
@@ -49,12 +49,12 @@ public class Medico implements Registrable {
         }
         String nombreLimpio = nombre.trim();
 
-        String SOLO_LETRAS_EXPRESION_REGULAR = "^[a-zA-ZáéíóúÁÉÍÓÚñÑ\\s]+$";
+        SOLO_LETRAS_EXPRESION_REGULAR = "^[a-zA-ZáéíóúÁÉÍÓÚñÑ\\s]+$";
 
         if (!nombreLimpio.matches("^[a-zA-ZáéíóúÁÉÍÓÚñÑ\\s]+$")) {
             throw new IllegalArgumentException("Nombre solo puede contener letras ❌");
         }
-        this.nombre = nombre;
+        this.nombre = nombreLimpio;
     }
 
     public String getApellido() {
@@ -71,12 +71,12 @@ public class Medico implements Registrable {
         }
         String apellidoLimpio = apellido.trim();
 
-        String SOLO_LETRAS_EXPRESION_REGULAR = "^[a-zA-ZáéíóúÁÉÍÓÚñÑ\\s]+$";
+        SOLO_LETRAS_EXPRESION_REGULAR = "^[a-zA-ZáéíóúÁÉÍÓÚñÑ\\s]+$";
 
         if (!apellidoLimpio.matches("^[a-zA-ZáéíóúÁÉÍÓÚñÑ\\s]+$")) {
             throw new IllegalArgumentException("Apellido solo puede contener letras ❌");
         }
-        this.apellido = apellido;
+        this.apellido = apellidoLimpio;
     }
 
     public Especialidad getEspecialidad() {
@@ -90,7 +90,19 @@ public class Medico implements Registrable {
         }
         this.especialidad = especialidad;
     }
-    
+
+
+    @Override
+    public String getDatosRegistro() {
+        return toString();
+    }
+
+    @Override
+    public boolean esValido() {
+
+        return nombre != null && nombre.matches(SOLO_LETRAS_EXPRESION_REGULAR) &&
+                apellido != null && apellido.matches(SOLO_LETRAS_EXPRESION_REGULAR);
+    }
 
     @Override
     public String toString() {

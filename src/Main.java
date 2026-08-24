@@ -1,22 +1,13 @@
-import datos.DatosCSV;
 import service.ClinicaService;
-
 import java.util.Scanner;
-
 
 public class Main {
     public static void main(String[] args) {
 
-        // 1.INSTANCIA CLINICA
-       ClinicaService servicio = new ClinicaService();
-
-        // 2. DATOS CSV
-       //DatosCSV.cargar(servicio);
-
-        // 3. SCANNER
+        ClinicaService servicio = new ClinicaService();
         Scanner scanner = new Scanner(System.in);
 
-        int opcion=-1;
+        int opcion = -1;
 
         do {
             mostrarMenu();
@@ -25,88 +16,65 @@ public class Main {
             try {
                 opcion = Integer.parseInt(scanner.nextLine());
 
-                // Valida rango
                 if (opcion < 0 || opcion > 10) {
-                    System.out.println(
-                            "Opción no válida. Ingrese un número del 0 al 10."
-                    );
+                    System.out.println("Opción no válida. Ingrese un número del 0 al 10.");
                     continue;
                 }
 
-            switch (opcion) {
+                switch (opcion) {
+                    case 1:
+                        System.out.println("REGISTRAR PACIENTE");
+                        break;
 
-                case 1:
-                    System.out.println("REGISTRAR PACIENTE");
-                   // registrarPaciente(scanner, servicio);
-                    break;
+                    case 2:
+                        System.out.println("REGISTRAR MEDICO");
+                        break;
 
-                case 2:
-                    System.out.println("REGISTRAR MEDICO");
-                   // registrarMedico(scanner, servicio);
-                    break;
+                    case 3:
+                        System.out.println("ASIGNAR TURNO");
+                        break;
 
-                case 3:
-                    System.out.println("ASIGNAR TURNO");
-                   // asignarTurno(scanner, servicio);
-                    break;
+                    case 4:
+                        System.out.println("LISTAR TURNOS DEL DÍA");
+                        break;
 
-                case 4:
-                    System.out.println("LISTAR TURNOS DEL DÍA");
-                  //  listarTurnosDelDia(scanner, servicio);
-                    break;
+                    case 5:
+                        System.out.println("CANCELAR TURNO");
+                        break;
 
-                case 5:
-                    System.out.println("CANCELAR TURNO");
-                    //cancelarTurno(scanner, servicio);
-                    break;
+                    case 6:
+                        System.out.println("VER TURNOS POR MÉDICO");
+                        break;
 
-                case 6:
-                    System.out.println("VER TURNOS POR MÉDICO");
-                    //verTurnosPorMedico(scanner, servicio);
-                    break;
+                    case 7:
+                        System.out.println("VER TURNOS POR PACIENTE");
+                        break;
 
-                case 7:
-                    System.out.println("VER TURNOS POR PACIENTE");
-                    //verTurnosPorPaciente(scanner, servicio);
-                    break;
+                    case 8:
+                        System.out.println("CAMBIAR ESTADO DE TURNO");
+                        break;
 
-                case 8:
-                    System.out.println("CAMBIAR ESTADO DE TURNO");
-                    //cambiarEstadoTurno(scanner, servicio);
-                    break;
+                    case 9:
+                        System.out.println("LISTAR PACIENTES");
+                        break;
 
-                case 9:
-                    System.out.println("LISTAR PACIENTES");
-                   // listarPacientes(servicio);
-                    break;
+                    case 10:
+                        System.out.println("FUNCION LISTAR MEDICOS");
+                        break;
 
-                case 10:
-                    System.out.println("FUNCION LISTAR MEDICOS");
-                   // listarMedicos(servicio);
-                    break;
-
-                case 0:
-                    System.out.println("ELECCIÓN SALIR...");
-                    DatosCSV.guardar(servicio);
-                    System.out.println("Hasta pronto. Datos guardados.");
-                    break;
-             }
+                    case 0:
+                        System.out.println("ELECCIÓN SALIR...");
+                        System.out.println("Hasta pronto. Datos guardados.");
+                        break;
+                }
             } catch (NumberFormatException e) {
-
-                System.out.println(
-                        "Entrada inválida. Debe ingresar un número del 0 al 10."
-                );
+                System.out.println("Entrada inválida. Debe ingresar un número del 0 al 10.");
             }
 
-
         } while (opcion != 0);
-
-        scanner.close();
-
     }
 
     public static void mostrarMenu() {
-
         System.out.println();
         System.out.println("╔══════════════════════════════════════╗");
         System.out.println("║     CLINICAAPP EQUIPO 2 - MENÚ       ║");
@@ -126,11 +94,4 @@ public class Main {
         System.out.println("╚══════════════════════════════════════╝");
         System.out.println();
     }
-
-
-
-
-
-
-
 }
