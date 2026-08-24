@@ -49,7 +49,6 @@ public class Medico implements Registrable {
         }
         String nombreLimpio = nombre.trim();
 
-        SOLO_LETRAS_EXPRESION_REGULAR = "^[a-zA-ZáéíóúÁÉÍÓÚñÑ\\s]+$";
 
         if (!nombreLimpio.matches("^[a-zA-ZáéíóúÁÉÍÓÚñÑ\\s]+$")) {
             throw new IllegalArgumentException("Nombre solo puede contener letras ❌");
@@ -71,12 +70,10 @@ public class Medico implements Registrable {
         }
         String apellidoLimpio = apellido.trim();
 
-        SOLO_LETRAS_EXPRESION_REGULAR = "^[a-zA-ZáéíóúÁÉÍÓÚñÑ\\s]+$";
 
         if (!apellidoLimpio.matches("^[a-zA-ZáéíóúÁÉÍÓÚñÑ\\s]+$")) {
             throw new IllegalArgumentException("Apellido solo puede contener letras ❌");
         }
-        this.apellido = apellidoLimpio;
     }
 
     public Especialidad getEspecialidad() {
@@ -90,7 +87,7 @@ public class Medico implements Registrable {
         }
         this.especialidad = especialidad;
     }
-
+    
 
     @Override
     public String getDatosRegistro() {
@@ -111,4 +108,5 @@ public class Medico implements Registrable {
     }
 
 
+    
 }

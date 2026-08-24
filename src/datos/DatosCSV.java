@@ -21,6 +21,7 @@ public class DatosCSV {
             while ((linea = br.readLine()) != null) {
                 if (linea.isBlank()) continue;
                 String[] p = linea.split(",", -1); // id,cedula,nombre,apellido,telefono
+
                 servicio.getPacientes().add(new Paciente(
                         Integer.parseInt(p[0].trim()),
                         p[1].trim(), p[2].trim(), p[3].trim(), p[4].trim()));
