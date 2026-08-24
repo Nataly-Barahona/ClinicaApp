@@ -1,6 +1,7 @@
 package service;
 
 import interfaces.Consultable;
+import model.EstadoTurno;
 import model.Medico;
 import model.Paciente;
 import model.Turno;
@@ -8,6 +9,7 @@ import model.Turno;
 import java.awt.image.AreaAveragingScaleFilter;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 public class ClinicaService implements Consultable {
@@ -47,7 +49,7 @@ public class ClinicaService implements Consultable {
             }
         }
         int nuevoId = maximo + 1;
-        medico.setId(maximo);
+        medico.setId(nuevoId);
         medicos.add(medico);
         System.out.println("Se registro el medico ✅ ");
         System.out.println(medico.getDatosRegistro());
@@ -85,4 +87,77 @@ public class ClinicaService implements Consultable {
     public List<Turno> buscarPorPaciente(Paciente paciente) {
         return List.of();
     }
+
+//Turno
+
+    public void asignarTurno(Turno turno) {
+
+        Paciente pacienteExistente = buscarPorCedula(turno.getPaciente().getCedula());
+        if (pacienteExistente == null) {
+            throw new IllegalArgumentException("El paciente no esta registrado.");
+        }
+
+        Medico medicoExistente = buscarMedicoInterno(turno.getMedico().getNombre(), turno.getMedico().getApellido());
+        if (medicoExistente == null) {
+            throw new IllegalArgumentException("El medico no esta registrado.");
+        }
+
+        if (turnos.contains(turno)) {
+            throw new IllegalArgumentException("El medico ya tiene un turno asignado en esa fecha y hora.");
+        }
+
+        int maximo = 0;
+        for (Turno t : turnos) {
+            if (t.getId() > maximo) {
+                maximo = t.getId();
+            }
+        }
+        int nuevoId = maximo + 1;
+        turno.setId(nuevoId);
+        turnos.add(turno);
+        System.out.println("Se asigno el turno ✅ ");
+        System.out.println(turno);
+    }
+
+    public void cancelarTurno(int idTurno) {
+        Turno turno = buscarTurnoPorId(idTurno);
+
+        if (turno == null) {
+            System.out.println("Turno no encontrado ❌");
+            return;
+        }
+        if (turno.getEstado() == EstadoTurno.ATENDIDO || turno.getEstado() == EstadoTurno.CANCELADO) {
+            System.out.println("No se puede cancelar un turno en estado " + turno.getEstado() + ".");
+            return;
+        }
+        turno.setEstado(EstadoTurno.CANCELADO);
+        System.out.println("Turno cancelado ✅");
+        System.out.println(turno);
+    }
+
+    public void cambiarEstadoTurno(int idTurno, EstadoTurno nuevo) {
+        Turno turno = buscarTurnoPorId(idTurno);
+
+        if (turno == null) {
+            System.out.println("Turno no encontrado ❌");
+            return;
+        }
+        turno.setEstado(nuevo);
+        System.out.println("Estado del turno actualizado a " + nuevo + " ✅");
+        System.out.println(turno);
+    }
+
+    private Turno buscarTurnoPorId(int idTurno) {
+        for (Turno t : turnos) {
+            if (t.getId() == idTurno) {
+                return t;
+            }
+        }
+        return null;
+    }
 }
+
+
+
+
+
