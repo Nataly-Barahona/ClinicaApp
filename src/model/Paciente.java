@@ -1,18 +1,18 @@
 package model;
 import interfaces.Registrable;
 import java.util.Objects;
-public class Paciente {
+public class Paciente implements Registrable{
     private int id;
-    private String telefono;
     private String cedula;
     private String nombre;
     private String apellido;
+    private String telefono;
 
-    public Paciente(String telefono, String cedula, String nombre, String apellido ) {
-        setTelefono(telefono);
+    public Paciente( String cedula, String nombre, String apellido, String telefono ) {
         setCedula(cedula);
         setNombre(nombre);
         setApellido(apellido);
+        setTelefono(telefono);
     }
     public Paciente(int id, String cedula, String nombre, String apellido, String telefono) {
         this(cedula, nombre, apellido, telefono);
@@ -62,7 +62,17 @@ public class Paciente {
         }
         this.telefono = telefono.trim();
     }
-    
+    @Override
+    public String getDatosRegistro() {
+        return toString();
+    }
+    @Override
+    public boolean esValido() {
+        return cedula != null && !cedula.trim().isEmpty() &&
+                nombre != null && !nombre.trim().isEmpty() &&
+                apellido != null && !apellido.trim().isEmpty() &&
+                telefono != null && telefono.matches("^[0-9]{7,10}$");
+    }
     @Override
     public int hashCode() {
         return Objects.hash(cedula);
